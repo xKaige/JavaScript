@@ -1,0 +1,53 @@
+/* Colores 
+
+#264653 - OSCURO
+#152e38 - VERDE OSCURO
+#2A9D8F - VERDE
+#E9C46A - MOSTAZA
+#F4A261 - NARANJA
+#E76F51 - LADRILLO
+
+
+*/
+
+/* HEADER */
+
+body {
+  background-color: #152e38 !important;
+}
+
+
+.navegacion a:hover {
+  color: #E76F51 !important;
+}
+
+.navegacion a {
+  color: #ffff !important;
+  font-size: 1rem;
+}
+
+.logo {
+  color: #2A9D8F !important;
+}
+
+.btn-color {
+  background-color: #E76F51 !important;
+  color: #fff !important;
+}
+
+
+/*  MAIN  */
+
+.cont__1, .cont__3 {
+  background-color: #264653;
+  height: 50vh;
+  
+}
+
+.textoEnemigo {
+  color: #fff;
+}
+
+.titulo {
+  color: #fff;
+}

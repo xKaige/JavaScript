@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intento de Juego</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-3">
+        <div class="container-fluid ms-2 logo">
+          <a class="navbar-brand logo fw-bolder" href="#">Intento de Juego</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse ms-5 navegacion" id="navbarText">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item active">
+                <a class="nav-link" aria-current="page" href="#">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Algo</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Contacto</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- <button type="button" class="btn position-relative btn-color me-5"> 
+            Carrito 
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary"></span>
+          </button> -->
+      </nav>
+</header>
+
+
+<!-- MAIN  -->
+
+<main class="mt-5 ms-5"> 
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+      <!--  <h2 class="titulo">Empecemos creando a los protagonistas de esta historia</h2>-->
+      </div>
+    </div>
+  </div>
+  
+  <!-- HEROE -->
+
+  <div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-3">
+          <div class="mb-3">
+            <input type="text" class="form-control" id="heroe" placeholder="Nombre Heroe">
+          </div>
+        </div>
+      <div class="col-lg-3">
+        <div class="mb-3">
+          <input type="text" class="form-control" id="vida" placeholder="HP">
+        </div>
+      </div>
+        <div class="col-lg-3">
+          <div class="mb-3">
+            <input type="text" class="form-control" id="atk" placeholder="ATK">
+          </div>
+        </div>
+        <div class="col-lg-3"> 
+          <button id="cpersonaje">Crear Personaje</button>
+        </div>
+      </div>
+      <div id="totalPersonaje"></div>
+  </div>
+
+  <!-- ENEMIGO -->
+
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-lg-3">
+        <div class="mb-3">
+          <input type="text" class="form-control" id="enemigo" placeholder="Nombre Enemigo">
+        </div>
+      </div>
+    <div class="col-lg-3">
+      <div class="mb-3">
+        <input type="text" class="form-control" id="vidaEnemigo" placeholder="HP">
+      </div>
+    </div>
+      <div class="col-lg-3">
+        <div class="mb-3">
+          <input type="text" class="form-control" id="atkEnemigo" placeholder="ATK">
+        </div>
+      </div>
+      <div class="col-lg-3"> 
+        <button id="cEnemigo">Crear Enemigo</button>
+      </div>
+    </div>    
+    <div id="total"></div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 mt-5">
+            <button class="submit btn-atk ">Simular Combate</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <button onclick="inicioNuevo()" class="mt-5">Empeza la aventura</button> 
+      </div>
+    </div>
+  </div>
+
+
+
+</main>
+
+
+
+
+   <script src="./script.js"></script>
+</body>
+
+</html>
