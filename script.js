@@ -1,11 +1,12 @@
 // --------------------- CLASE 5 --------------------------
 
-// CONSTANTES DOM
+
+// -------------------- CONSTANTES DOM ----------------------------//
 
 const cPersonaje = document.querySelector("#cpersonaje");
 const cEnemigo = document.querySelector("#cEnemigo");
 
-// CREACION DE PERSONAJE
+//------------------ CREACION DE PERSONAJE -----------------------//
 
 class Personaje {
     constructor (nombre, vida, ataque){
@@ -37,7 +38,7 @@ function crearPersona (){
 };
 
 
-// CREACION DE ENEMIGO 
+// ----------------- CREACION DE ENEMIGO ------------------ //
 
 class Enemigo {
     constructor (nombre, vida, ataque) {
@@ -67,8 +68,8 @@ function crearEnemigo (){
     nEnemigo = new Enemigo(enemigo.value, vidaEnemigo.value, atkEnemigo.value)
 };
 
-// FUNCION DE VALIDADCION //
 
+// --------------------- FUNCION DE VALIDACION ---------------------- //
 
 function validarDatos(){
     const heroe = document.querySelector("#heroe");
@@ -106,7 +107,7 @@ function validarDatosEnemigo(){
                     } 
 }
 
- // FUNCION DAÑO
+ // ------------------- FUNCION DE DAÑO SIN UTILIZAR, AGREGAR A FUTURO ------------------------- //
 
 function restarVidaHeroe (valor){
     sumarVidaHeroe(-valor)
@@ -125,6 +126,9 @@ function sumarVidaHeroe (valor){
 function recibirDañoHeroe (){
     restarVidaHeroe(nEnemigo.atk)
 };
+
+ // ------------------- FIN  ------------------------- //
+
 
 // INICIAR
 
@@ -246,10 +250,6 @@ function inicioNuevo (){
     // ---------------- FUNCIONES --------------- //
 
     */
-
-
-
-
 
     /*
 
