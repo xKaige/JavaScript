@@ -5,6 +5,11 @@
 
 const cPersonaje = document.querySelector("#cpersonaje");
 const cEnemigo = document.querySelector("#cEnemigo");
+const combate = document.querySelector("#cmbSimulado");
+const resCombate = document.querySelector("#resumeCombate");
+const resultadoLocal = document.querySelector("#storage");
+const resultadosCombates = document.querySelector("#resultadosCombates");
+const borrarLocales = document.querySelector("#borrarLocal");
 
 //------------------ CREACION DE PERSONAJE -----------------------//
 
@@ -23,6 +28,7 @@ cPersonaje.addEventListener("click", function(){
             crearPersona();
             const divTotalPersonaje = document.querySelector("#totalPersonaje");
             divTotalPersonaje.innerHTML = `<p class="textoEnemigo mt-2"> <b>Heroe</b>: ${nHeroe.name} <b>Hp</b>: ${nHeroe.vida} <b>Atk</b>: ${nHeroe.atk} </p>`
+            localStorage.setItem("heroe", JSON.stringify(nHeroe));
             cPersonaje.disabled = true;
         }else{
             alert("Completa bien los campos maquinola")
@@ -36,6 +42,7 @@ function crearPersona (){
     nHeroe = new Personaje(heroe.value, vida.value, atk.value)
 
 };
+
 
 
 // ----------------- CREACION DE ENEMIGO ------------------ //
@@ -55,11 +62,13 @@ cEnemigo.addEventListener("click", function(){
         crearEnemigo()        
         const divTotal = document.querySelector("#total");
         divTotal.innerHTML = `<p class="textoEnemigo mt-2"> <b>Enemigo</b>: ${nEnemigo.name} <b>Hp</b>: ${nEnemigo.vida} <b>Atk</b>: ${nEnemigo.atk} </p>`;
+        localStorage.setItem("enemigo", JSON.stringify(nEnemigo));
         cEnemigo.disabled = true;
     } else {
         alert("Completa bien los campos papu")
     }
 });
+
 
 function crearEnemigo (){
     const enemigo = document.querySelector("#enemigo");
@@ -86,7 +95,7 @@ function validarDatos(){
                 }else{
                     return true
                     } 
-}
+};
 
 
 
@@ -105,31 +114,124 @@ function validarDatosEnemigo(){
                 }else{
                     return true
                     } 
-}
+};
 
- // ------------------- FUNCION DE DAÑO SIN UTILIZAR, AGREGAR A FUTURO ------------------------- //
+// ----------------------- ARRAY ----------------------------------//
 
-function restarVidaHeroe (valor){
-    sumarVidaHeroe(-valor)
-}
+let resultados = []
 
-function sumarVidaHeroe (valor){
-    nHeroe.vida += valor
-    const divTotalPersonaje = document.querySelector("#totalPersonaje");
-    if (nHeroe.vida <= 0){
-        divTotalPersonaje.innerHTML = `<p class="textoEnemigo mt-2"> ${nHeroe.name} la re quedó </p>`
-    }else {
-        divTotalPersonaje.innerHTML = `<p class="textoEnemigo mt-2"> <b>Heroe</b>: ${nHeroe.name} <b>Hp</b>: ${nHeroe.vida} <b>Atk</b>: ${nHeroe.atk} </p>`
-    }
-}
+let vEnemiga = "El enemigo obtuvo la victoria";
+let vHeroe = "El heroe obtuvo la victoria";
+
+ // ------------------- RECIBIR DAÑO HEROE------------------------- //
 
 function recibirDañoHeroe (){
     restarVidaHeroe(nEnemigo.atk)
 };
 
- // ------------------- FIN  ------------------------- //
+function restarVidaHeroe (valor){
+    sumarVidaHeroe(-valor)
+};
+
+function sumarVidaHeroe (valor){
+    nHeroe.vida += valor
+    const divTotalPersonaje = document.querySelector("#totalPersonaje");
+    if (nHeroe.vida <= 0){
+        resCombate.disabled = true
+        divTotalPersonaje.innerHTML = `<p class="textoEnemigo mt-2"> ${nHeroe.name} la re quedó </p>`
+        resultados.push(vEnemiga);
+        localStorage.setItem("resultado", JSON.stringify(resultados))
+    }else {
+        divTotalPersonaje.innerHTML = `<p class="textoEnemigo mt-2"> <b>Heroe</b>: ${nHeroe.name} <b>Hp</b>: ${nHeroe.vida} <b>Atk</b>: ${nHeroe.atk} </p>`
+    }
+};
+
+ // ------------------- RECIBIR DAÑO ENEMIGO------------------------- //
+
+ function recibirDañoEnemigo (){
+    restarVidaEnemigo(nHeroe.atk)
+};
+
+function restarVidaEnemigo (valor){
+    sumarVidaEnemigo(-valor)
+};
+
+function sumarVidaEnemigo (valor){
+    nEnemigo.vida += valor
+    const divTotal = document.querySelector("#total");
+    if (nEnemigo.vida <= 0){
+        resCombate.disabled = true
+        divTotal.innerHTML = `<p class="textoEnemigo mt-2"> ${nEnemigo.name} la re quedó </p>`
+        resultados.push(vHeroe);
+        localStorage.setItem("resultado", JSON.stringify(resultados))
+    }else {
+        divTotal.innerHTML = `<p class="textoEnemigo mt-2"> <b>Heroe</b>: ${nEnemigo.name} <b>Hp</b>: ${nEnemigo.vida} <b>Atk</b>: ${nEnemigo.atk} </p>`
+    }
+};
 
 
+// ---------------- FUNCIONES DE COMBATE ----------------------------- //
+
+combate.addEventListener("click", function(){
+    iniciarCombate();
+    combate.disabled = true;
+});
+
+let parImpar = () => { return ((Math.round(Math.random() * 9 + 1))%2 == 0)}
+
+function iniciarCombate (){
+    if (cEnemigo.disabled == true && cPersonaje.disabled == true){
+        turnoRandom()
+    }
+};
+
+resCombate.addEventListener("click", function(){
+    combate.disabled = false;
+});
+
+function turnoRandom (){
+    if (parImpar()){
+        recibirDañoEnemigo ()
+        console.log("Ataque primero el Heroe")
+    }else {
+        console.log("Ataque primero el Enemigo")
+        recibirDañoHeroe()
+    }
+};
+
+// ------------------------- MOSTRAR STORAGE ---------------------// 
+
+
+
+resultadoLocal.addEventListener("click", function(){
+    validarLocales()
+})
+
+function validarLocales(){
+    let resultadosLocales = JSON.parse(localStorage.getItem("resultado"))
+
+    if(!resultadosLocales){
+        resultadosCombates.innerHTML = `<p class="textoEnemigo">No se encontraron resultados</p>`
+    } else {
+        resultadosCombates.innerHTML = `<p class="textoEnemigo mt-2">${resultadosLocales}</p>`
+    }
+}
+
+
+
+
+// -------------------------- BORRAR LOCAL STORAGE ---------------- //
+
+
+borrarLocales.addEventListener("click", function(){
+    borrarDatosLocales()
+});
+
+let borrarDatosLocales = () => {localStorage.clear()}
+
+// ------------------- FIN  ------------------------- //
+
+/*
 // INICIAR
 
 function inicioNuevo (){
@@ -164,7 +266,7 @@ function inicioNuevo (){
         }
     };
 
-    drop()
+    drop();
    
 
 
@@ -202,7 +304,7 @@ function inicioNuevo (){
     };
 
 
-}
+};
 
 
 
