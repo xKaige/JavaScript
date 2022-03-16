@@ -14,6 +14,11 @@
 
 body {
   background-color: #152e38 !important;
+  font-family: 'Press Start 2P', cursive !important;
+}
+
+header a{
+  font-size: 1rem !important;
 }
 
 
@@ -23,7 +28,6 @@ body {
 
 .navegacion a {
   color: #ffff !important;
-  font-size: 1rem;
 }
 
 .logo {
