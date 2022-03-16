@@ -20,11 +20,12 @@ const imgHeroe = document.querySelector("#imgHeroe")
 //------------------ CREACION DE PERSONAJE -----------------------//
 
 class Personaje {
-    constructor (nombre, vida, ataque){
+    constructor (nombre, vida, ataque, avatar){
         this.name = nombre;
         this.vidaMax = parseInt(vida);
         this.vida = parseInt(vida);
         this.atk = parseInt(ataque);
+        this.avata = avatar;
     }
 };
 
@@ -33,13 +34,19 @@ let nHeroe = new Personaje("", 0, 0);
 cPersonaje.addEventListener("click", function(){
         if (validarDatos()){
             crearPersona();
+            validacionAvatar();
             const divTotalPersonaje = document.querySelector("#totalPersonaje");
             divTotalPersonaje.innerHTML = `<p class="textoEnemigo mt-2"> <b>Heroe</b>: ${nHeroe.name} <b>Hp</b>: ${nHeroe.vida} <b>Atk</b>: ${nHeroe.atk} </p>`
             localStorage.setItem("heroe", JSON.stringify(nHeroe));
-            Swal.fire({
-                title: "Personaje Creado",
-                icon: "success"
-            })
+            Toastify({
+                text: "Personaje Creado",
+                className: "info",
+                position: "rigth",
+                gravity: "bottom",
+                style: {
+                  background: "linear-gradient(to right, #E76F51, #E9C46A)",
+                }
+              }).showToast();
             cPersonaje.disabled = true;
         }else{
             Swal.fire({
@@ -54,7 +61,8 @@ function crearPersona (){
     const heroe = document.querySelector("#heroe");
     const vida = document.querySelector("#vida");
     const atk = document.querySelector("#atk");
-    nHeroe = new Personaje(heroe.value, vida.value, atk.value)
+    const avatar = validaAvatar();
+    nHeroe = new Personaje(heroe.value, vida.value, atk.value, avatar)
 
 };
 
@@ -74,13 +82,26 @@ let nEnemigo = new Enemigo("", 0, 0);
 
 cEnemigo.addEventListener("click", function(){
     if (validarDatosEnemigo()){
-        crearEnemigo()        
+        crearEnemigo()  
+        Toastify({
+            text: "Personaje Creado",
+            className: "info",
+            position: "rigth",
+            gravity: "bottom",
+            style: {
+              background: "linear-gradient(to right, #E76F51, #E9C46A)",
+            }
+          }).showToast();      
         const divTotal = document.querySelector("#total");
         divTotal.innerHTML = `<p class="textoEnemigo mt-2"> <b>Enemigo</b>: ${nEnemigo.name} <b>Hp</b>: ${nEnemigo.vida} <b>Atk</b>: ${nEnemigo.atk} </p>`;
         localStorage.setItem("enemigo", JSON.stringify(nEnemigo));
         cEnemigo.disabled = true;
+        
     } else {
-        alert("Completa bien los campos papu")
+        Swal.fire({
+            title: "Usa los datos correctos papu",
+            icon: "error"
+        })
     }
 });
 
@@ -214,8 +235,9 @@ resultadoLocal.addEventListener("click", function(){
 })
 
 function validarLocales(){
-    let resultadosLocales = JSON.parse(localStorage.getItem("resultado"))
-    !resultadosLocales ? resultadosCombates.innerHTML = `<p class="textoEnemigo">No se encontraron resultados</p>` : resultadosCombates.innerHTML = `<p class="textoEnemigo mt-2">${resultadosLocales}</p>`;
+    let resultadosLocales = JSON.parse(localStorage.getItem("resultado"));
+    let innerHtml = !resultadosLocales ? `<p class="textoEnemigo">No se encontraron resultados</p>` : `<p class="textoEnemigo mt-2">${resultadosLocales}</p>`;
+    resultadosCombates.innerHTML = innerHtml;
 }
 
 // -------------------------- BORRAR LOCAL STORAGE ---------------- //
@@ -226,15 +248,22 @@ borrarLocales.addEventListener("click", function(){
 
 let borrarDatosLocales = () => {localStorage.clear()};
 
-
-
+// ------------------------ VALIDACION GIF -------------------------- //
 
 function validacionImg () {
     let porcentajeVida = (nHeroe.vida*100)/nHeroe.vidaMax;
 
     if (porcentajeVida <= 75 && porcentajeVida > 30){
-        imgHeroe.src="./img/Capy1-50.gif"
+        imgHeroe.src=`./img/Capy${nHeroe.avata}-50.gif`
     } else if (porcentajeVida <= 30 ){
-        imgHeroe.src="./img/Capy1-30.gif"
+        imgHeroe.src=`./img/Capy${nHeroe.avata}-30.gif`
     }
+};
+
+// ----------------------- AVATAR RANDOM ------------------- //
+
+let validaAvatar = () => { return (Math.round(Math.random()* 2))+1};
+
+function validacionAvatar() {
+        imgHeroe.src=`./img/Capy${nHeroe.avata}-100.gif`
 };
