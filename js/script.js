@@ -1,4 +1,4 @@
-// --------------------- CLASE 5 --------------------------
+// --------------------- CLASE 7 --------------------------
 
 
 // -------------------- CONSTANTES DOM ----------------------------//
@@ -12,7 +12,8 @@ const resCombate = document.querySelector("#resumeCombate");
 const resultadoLocal = document.querySelector("#storage");
 const resultadosCombates = document.querySelector("#resultadosCombates");
 const borrarLocales = document.querySelector("#borrarLocal");
-const imgHeroe = document.querySelector("#imgHeroe")
+const imgHeroe = document.querySelector("#imgHeroe");
+const imgEnemigo = document.querySelector("#imgEnemigo");
 
 // RECORDATORIO DE CAMBIAR A getElementByID
 
@@ -36,22 +37,18 @@ cPersonaje.addEventListener("click", function(){
             crearPersona();
             validacionAvatar();
             const divTotalPersonaje = document.querySelector("#totalPersonaje");
-            divTotalPersonaje.innerHTML = `<p class="textoEnemigo mt-2"> <b>Heroe</b>: ${nHeroe.name} <b>Hp</b>: ${nHeroe.vida} <b>Atk</b>: ${nHeroe.atk} </p>`
+            divTotalPersonaje.innerHTML = `<p class="textoEnemigo mt-2"> <b>Personaje</b>: ${nHeroe.name} <b>Hp</b>: ${nHeroe.vida} <b>Atk</b>: ${nHeroe.atk} </p>`
             localStorage.setItem("heroe", JSON.stringify(nHeroe));
-            Toastify({
-                text: "Personaje Creado",
-                className: "info",
-                position: "rigth",
-                gravity: "bottom",
-                style: {
-                  background: "linear-gradient(to right, #E76F51, #E9C46A)",
-                }
-              }).showToast();
+            alertCreacionPersonaje()
             cPersonaje.disabled = true;
         }else{
             Swal.fire({
                 title: "Usa los datos correctos papu",
-                icon: "error"
+                icon: "error",
+                iconColor: "red",
+                width: "30%",
+                background: "#C96CFF",
+                color: "#ffff"
             })
         }       
 });
@@ -70,37 +67,35 @@ function crearPersona (){
 // ----------------- CREACION DE ENEMIGO ------------------ //
 
 class Enemigo {
-    constructor (nombre, vida, ataque) {
-        this.name = nombre;
+    constructor (nombre, vida, ataque, avatar) {
+        this.name = nombre;        
+        this.vidaMax = parseInt(vida);
         this.vida = parseInt(vida);
         this.atk = parseInt(ataque)
+        this.avata = avatar;
     }
 };
 
 let nEnemigo = new Enemigo("", 0, 0);
 
-
 cEnemigo.addEventListener("click", function(){
     if (validarDatosEnemigo()){
         crearEnemigo()  
-        Toastify({
-            text: "Personaje Creado",
-            className: "info",
-            position: "rigth",
-            gravity: "bottom",
-            style: {
-              background: "linear-gradient(to right, #E76F51, #E9C46A)",
-            }
-          }).showToast();      
+        validacionAvatarEnemigo()
         const divTotal = document.querySelector("#total");
         divTotal.innerHTML = `<p class="textoEnemigo mt-2"> <b>Enemigo</b>: ${nEnemigo.name} <b>Hp</b>: ${nEnemigo.vida} <b>Atk</b>: ${nEnemigo.atk} </p>`;
         localStorage.setItem("enemigo", JSON.stringify(nEnemigo));
+        alertCreacionPersonaje()    
         cEnemigo.disabled = true;
-        
     } else {
         Swal.fire({
             title: "Usa los datos correctos papu",
-            icon: "error"
+            icon: "error",
+            iconColor: "red",
+            width: "30%",
+            background: "#C96CFF",
+            color: "#ffff"
+            
         })
     }
 });
@@ -109,7 +104,8 @@ function crearEnemigo (){
     const enemigo = document.querySelector("#enemigo");
     const vidaEnemigo = document.querySelector("#vidaEnemigo");
     const atkEnemigo = document.querySelector("#atkEnemigo");
-    nEnemigo = new Enemigo(enemigo.value, vidaEnemigo.value, atkEnemigo.value)
+    const avatar = validaAvatar();
+    nEnemigo = new Enemigo(enemigo.value, vidaEnemigo.value, atkEnemigo.value, avatar)
 };
 
 // --------------------- FUNCION DE VALIDACION ---------------------- //
@@ -153,8 +149,8 @@ function validarDatosEnemigo(){
 
 let resultados = []
 
-let vEnemiga = "El enemigo obtuvo la victoria";
-let vHeroe = "El heroe obtuvo la victoria";
+let vEnemiga = "El Jugador 2 obtuvo la victoria";
+let vHeroe = "El Jugador 1 obtuvo la victoria";
 
  // ------------------- RECIBIR DAÑO HEROE------------------------- //
 
@@ -208,6 +204,7 @@ function sumarVidaEnemigo (valor){
 combate.addEventListener("click", function(){
     iniciarCombate();
     validacionImg();
+    validacionImgEnemigo()
     combate.disabled = true;
 });
 
@@ -260,10 +257,41 @@ function validacionImg () {
     }
 };
 
+function validacionImgEnemigo(){
+    let porcentajeVida = (nEnemigo.vida*100)/nEnemigo.vidaMax;
+
+    if (porcentajeVida <=75 && porcentajeVida > 30){
+        imgEnemigo.src=`./img/Capy${nEnemigo.avata}-50.gif`
+    } else if (porcentajeVida <=30 ){
+        imgEnemigo.src=`./img/Capy${nEnemigo.avata}-30.gif`
+    };
+}
+
 // ----------------------- AVATAR RANDOM ------------------- //
 
 let validaAvatar = () => { return (Math.round(Math.random()* 2))+1};
 
 function validacionAvatar() {
-        imgHeroe.src=`./img/Capy${nHeroe.avata}-100.gif`
+    imgHeroe.src=`./img/Capy${nHeroe.avata}-100.gif`
 };
+
+function validacionAvatarEnemigo(){
+    imgEnemigo.src=`./img/Capy${nEnemigo.avata}-100.gif`
+}
+
+function alertCreacionPersonaje(){
+    Toastify({
+        text: "Personaje Creado",
+        className: "info",
+        position: "right",
+        duration: "1500",
+        backgroundColor:"#b5179e",
+        gravity: "top",
+        offset:{
+            x: 350
+        },
+        style: {
+          background: "linear-gradient(to right, #E76F51, #E9C46A)",
+        }
+      }).showToast();
+}

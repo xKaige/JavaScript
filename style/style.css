@@ -13,17 +13,20 @@
 /* HEADER */
 
 body {
-  background-color: #152e38 !important;
+  background-color: #190031 !important;
   font-family: 'Press Start 2P', cursive !important;
+}
+
+.navColor {
+  background-color: #0b001d !important;
 }
 
 header a{
   font-size: 1rem !important;
 }
 
-
 .navegacion a:hover {
-  color: #E76F51 !important;
+  color: #e0aaff !important;
 }
 
 .navegacion a {
@@ -31,7 +34,7 @@ header a{
 }
 
 .logo {
-  color: #2A9D8F !important;
+  color: #7b2cbf !important;
 }
 
 .btn-color {
@@ -58,4 +61,13 @@ header a{
 
 .spanFunciones {
   color: #fff;
+}
+
+.btn-primary {
+  background-color: #9D4EDD !important;
+  border-color: #7B2CBF !important;
+}
+
+.btn-primary:focus {
+  box-shadow: 0 0 0 0.15rem #C77DFF !important;
 }
