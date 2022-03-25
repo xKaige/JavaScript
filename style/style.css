@@ -42,13 +42,11 @@ header a{
   color: #fff !important;
 }
 
-
 /*  MAIN  */
 
 .cont__1, .cont__3 {
   background-color: #264653;
-  height: 50vh;
-  
+  height: 50vh;  
 }
 
 .textoEnemigo {
@@ -70,4 +68,8 @@ header a{
 
 .btn-primary:focus {
   box-shadow: 0 0 0 0.15rem #C77DFF !important;
+}
+
+#error {
+  color: #fff;
 }

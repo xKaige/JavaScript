@@ -1,4 +1,4 @@
-// --------------------- CLASE 7 --------------------------
+// --------------------- CLASE 8 --------------------------
 
 
 // -------------------- CONSTANTES DOM ----------------------------//
@@ -14,6 +14,8 @@ const resultadosCombates = document.querySelector("#resultadosCombates");
 const borrarLocales = document.querySelector("#borrarLocal");
 const imgHeroe = document.querySelector("#imgHeroe");
 const imgEnemigo = document.querySelector("#imgEnemigo");
+const img1 = document.querySelector("#img-1");
+const divError = document.querySelector("#error");
 
 // RECORDATORIO DE CAMBIAR A getElementByID
 
@@ -295,3 +297,23 @@ function alertCreacionPersonaje(){
         }
       }).showToast();
 }
+
+// ---------------------- PROMESAS -------------------------- //
+
+
+fetch("https://dog.ceo/api/breeds/image/random") // INVOCA A LA API
+    .then((resp) => {                           // TRAE Y COMPRUEBA JSON DE LA API
+        if (resp.status == 200){
+            return resp.json()
+        } else{
+            divError.innerHTML = `<p>No se cargó bien la API</p>`
+        }
+    })
+    .then((data)=>{ // INVOCAR CUERPO DEL MENSAJE
+        if(data){
+            img1.src= data.message
+        }
+    })
+    .catch(() => { // ERROR DEL CUERPO
+        divError.innerHTML = `<p>No se cargó bien la imagen</p>`
+    });
