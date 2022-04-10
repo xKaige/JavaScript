@@ -197,6 +197,7 @@ function sumarVidaHeroe (valor){
     const divTotalPersonaje = document.querySelector("#totalPersonaje");
     if (nHeroe.vida <= 0){
         resCombate.disabled = true
+        combate.disabled = true
         divTotalPersonaje.innerHTML = `<p class="textoEnemigo mt-2"> ${nHeroe.name} la re quedó </p>`
         resultados.push(vEnemiga);
         localStorage.setItem("resultado", JSON.stringify(resultados))
@@ -222,6 +223,7 @@ function sumarVidaEnemigo (valor){
     const divTotal = document.querySelector("#total");
     if (nEnemigo.vida <= 0){
         resCombate.disabled = true
+        combate.disabled = true
         divTotal.innerHTML = `<p class="textoEnemigo mt-2"> ${nEnemigo.name} la re quedó </p>`
         resultados.push(vHeroe);
         localStorage.setItem("resultado", JSON.stringify(resultados))
@@ -236,9 +238,9 @@ function sumarVidaEnemigo (valor){
 // ---------------------------- FUNCIONES ----------------------------- //
 
 function divHeroeTrue(){
-    nombrePersonaje.innerHTML=`<p class="textoEnemigo"><b>Hp</b>: ${nHeroe.name}`
-    vidaPersonaje.innerHTML=`<p class="textoEnemigo"><b>Heroe</b>: ${nHeroe.vida}</p>`
+    nombrePersonaje.innerHTML=`<p class="textoEnemigo"><b>Heroe</b>: ${nHeroe.name}`
     atkPersonaje.innerHTML=`<p class="textoEnemigo"><b>Atk</b>: ${nHeroe.atk}</p>`
+    vidaPersonaje.innerHTML=`<p class="textoEnemigo"><b>Hp</b>: ${nHeroe.vida}</p>`
 }
 
 
